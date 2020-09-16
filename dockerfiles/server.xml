@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Server port="8005" shutdown="SHUTDOWN">
-    <Service name="Catalina">
-        <Connector port="8080" protocol="HTTP/1.1"
-                   connectionTimeout="20000"
-                   redirectPort="8443"/>
+<server description="Skred">
+    <featureManager>
+        <feature>microProfile-3.2</feature>
+    </featureManager>
 
-        <Engine name="Catalina" defaultHost="localhost">
-            <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">
-            </Host>
-        </Engine>
-    </Service>
-</Server>
+    <variable name="default.http.port" defaultValue="9080"/>
+    <variable name="default.https.port" defaultValue="9443"/>
+    <httpEndpoint host="*" id="defaultHttpEndpoint"
+                  httpPort="${default.http.port}" httpsPort="${default.https.port}"/>
+
+    <applicationManager autoExpand="true" />
+</server>
