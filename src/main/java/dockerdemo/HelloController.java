@@ -1,21 +1,47 @@
 package dockerdemo;
 
 
-import org.springframework.stereotype.Controller;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
-@Controller
+@RestController
 @RequestMapping("/hello")
-public class HelloController {
+public class HelloController
+{
+	private final JdbcTemplate jdbcTemplate;
+
+
+	public HelloController(JdbcTemplate jdbcTemplate)
+	{
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
 
 	@GetMapping
-	@ResponseBody
-	public String hello() {
-		return String.format("hello, %s", LocalDateTime.now());
+	public Map<String, Object> hello()
+	{
+		List<Map<Integer, String>> rows = jdbcTemplate.query(
+				"SELECT * FROM PERSON;",
+				(rs, i) -> {
+					Map<Integer, String> map = new HashMap<>();
+					map.put(
+							rs.getInt("ID"),
+							rs.getString("USERNAME")
+					);
+					return map;
+				});
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("users", rows);
+		map.put("date/time", LocalDateTime.now());
+		return map;
 	}
 }

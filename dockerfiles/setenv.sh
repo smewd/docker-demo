@@ -1,0 +1,1 @@
+JAVA_OPTS="${JAVA_OPTS} -Ddb_name=${DB_NAME}"
