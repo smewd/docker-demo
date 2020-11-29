@@ -7,6 +7,4 @@ COPY dockerfiles/setenv.sh ${CATALINA_HOME}/bin
 COPY dockerfiles/context.xml ${CATALINA_HOME}/conf
 COPY dockerfiles/server.xml ${CATALINA_HOME}/conf
 
-ENV CATALINA_OPTS="${CATALINA_OPTS} -Xms4096m -Xmx4096m"
-
 EXPOSE 8080

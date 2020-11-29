@@ -4,4 +4,4 @@ target
 bin/
 .idea
 *.iml
-.env
+.env*
