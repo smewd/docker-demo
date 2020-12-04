@@ -7,4 +7,9 @@ COPY dockerfiles/setenv.sh ${CATALINA_HOME}/bin
 COPY dockerfiles/context.xml ${CATALINA_HOME}/conf
 COPY dockerfiles/server.xml ${CATALINA_HOME}/conf
 
-EXPOSE 8080
+ENV JPDA_ADDRESS=8000
+ENV JPDA_TRANSPORT=dt_socket
+
+EXPOSE 8000 8080
+
+CMD ["catalina.sh", "jpda", "run"]
