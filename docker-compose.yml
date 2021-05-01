@@ -2,6 +2,7 @@ version: "3.8"
 services:
   tomcat:
     build: .
+    image: dcdemo
     ports:
     - 8000:8000
     - 8080:8080
