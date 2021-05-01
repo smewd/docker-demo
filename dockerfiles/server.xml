@@ -7,6 +7,8 @@
 
         <Engine name="Catalina" defaultHost="localhost">
             <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">
+                <Context path="/test" docBase="/usr/local/tomcat/test"/>
+                <Context path="/test2" docBase="/usr/local/tomcat/test2"/>
             </Host>
         </Engine>
     </Service>
