@@ -28,6 +28,7 @@
 
         <!-- spring boot settings -->
         <start-class>dockerdemo.Application</start-class>
+        <logback_logs>logback-logs</logback_logs>
     </properties>
 
     <dependencies>
