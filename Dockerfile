@@ -8,7 +8,6 @@ COPY dockerfiles/context.xml ${CATALINA_HOME}/conf
 COPY dockerfiles/server.xml ${CATALINA_HOME}/conf
 COPY dockerfiles/web.xml ${CATALINA_HOME}/conf
 
-RUN mkdir /usr/local/tomcat/logback-logs
 ENV JPDA_ADDRESS=8000
 ENV JPDA_TRANSPORT=dt_socket
 

@@ -8,8 +8,7 @@
         <Engine name="Catalina" defaultHost="localhost">
             <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">
                 <Context path="/logs" docBase="/usr/local/tomcat/logs"/>
-                <Context path="/logback-logs" docBase="/usr/local/tomcat/logback-logs"/>
-<!--                <Context path="/logback-logs" docBase="${LOGBACK_LOGS}"/>-->
+                <Context path="/logback-logs" docBase="${logback_logs}"/>
             </Host>
         </Engine>
     </Service>
