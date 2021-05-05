@@ -28,7 +28,6 @@
 
         <!-- spring boot settings -->
         <start-class>dockerdemo.Application</start-class>
-        <logback_logs>logback-logs-pom</logback_logs>
         <resource.delimiter>${*}</resource.delimiter>
     </properties>
 
@@ -95,15 +94,6 @@
             <properties>
                 <logback_logs>logdir_profil1</logback_logs>
                 <spring.main.banner-mode>off</spring.main.banner-mode>
-            </properties>
-        </profile>
-        <profile>
-            <id>profil2</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <logback_logs>logdir_profil2</logback_logs>
             </properties>
         </profile>
     </profiles>
