@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
 		http://maven.apache.org/POM/4.0.0
 		http://maven.apache.org/maven-v4_0_0.xsd
 ">
@@ -29,6 +29,7 @@
         <!-- spring boot settings -->
         <start-class>dockerdemo.Application</start-class>
         <logback_logs>logback-logs-pom</logback_logs>
+        <resource.delimiter>${*}</resource.delimiter>
     </properties>
 
     <dependencies>
@@ -87,4 +88,23 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>profil1</id>
+            <properties>
+                <logback_logs>logdir_profil1</logback_logs>
+                <spring.main.banner-mode>off</spring.main.banner-mode>
+            </properties>
+        </profile>
+        <profile>
+            <id>profil2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <logback_logs>logdir_profil2</logback_logs>
+            </properties>
+        </profile>
+    </profiles>
 </project>
