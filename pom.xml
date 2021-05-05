@@ -28,6 +28,7 @@
 
         <!-- spring boot settings -->
         <start-class>dockerdemo.Application</start-class>
+        <!--suppress UnresolvedMavenProperty -->
         <resource.delimiter>${*}</resource.delimiter>
     </properties>
 
