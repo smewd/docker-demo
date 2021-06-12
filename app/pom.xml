@@ -12,7 +12,7 @@
     <artifactId>app</artifactId>
 
     <properties>
-        <start-class>dockerdemo.Application</start-class>
+        <start-class>dockerdemo.app.Application</start-class>
     </properties>
 
     <dependencies>
