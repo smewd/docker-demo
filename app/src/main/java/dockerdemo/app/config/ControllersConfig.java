@@ -1,4 +1,4 @@
-package dockerdemo.config;
+package dockerdemo.app.config;
 
 
 import org.springframework.context.annotation.ComponentScan;

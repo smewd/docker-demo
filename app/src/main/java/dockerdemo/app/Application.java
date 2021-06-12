@@ -7,9 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {
-		dockerdemo.config.PackageMarker.class,
-})
 public class Application
 {
 	public static void main(String[] args)

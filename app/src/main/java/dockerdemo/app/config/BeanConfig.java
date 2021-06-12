@@ -1,4 +1,4 @@
-package dockerdemo.config;
+package dockerdemo.app.config;
 
 
 import dockerdemo.components.HelloComponent;
@@ -17,6 +17,6 @@ public class BeanConfig
 	@PostConstruct
 	public void setup()
 	{
-		System.out.println("\n\nPost-init BeanConfig\n\n");
+		System.out.printf("%n%nPost-init %s%n%n", getClass().getName());
 	}
 }

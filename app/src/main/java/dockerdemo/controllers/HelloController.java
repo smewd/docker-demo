@@ -23,6 +23,13 @@ public class HelloController
 	}
 
 
+	@PostConstruct
+	public void setup()
+	{
+		System.out.printf("%n%nPost-init %s%n%n", getClass().getName());
+	}
+
+
 	@GetMapping
 	@ResponseBody
 	public String hello()
