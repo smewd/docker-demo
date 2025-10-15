@@ -42,7 +42,7 @@ class TestControllerIntegrationTest {
 
 		// values come from application.properties (defaults bundled in src/main/resources)
 		assertThat(body.get("applicationName")).isEqualTo("demo");
-		assertThat(body.get("stringValue")).isEqualTo("String value");
+		assertThat(body.get("stringValue")).isEqualTo("Hejsan application-dev.properties");
 
 		String profile = environment.getActiveProfiles()[0];
 		assertThat(profile).isEqualTo("dev");
