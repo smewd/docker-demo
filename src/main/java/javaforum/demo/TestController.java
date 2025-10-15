@@ -14,12 +14,15 @@ public class TestController {
 	@Value("${environment.name}")
 	private String environmentName;
 	
+	@Value("${database}")
+	private String database;
+	
 	@Value("${string.value}")
 	private String stringValue;
 
 
 	@GetMapping("/data")
 	public Data getData() {
-		return new Data(applicationName, environmentName, stringValue);
+		return new Data(applicationName, environmentName, database, stringValue);
 	}
 }
