@@ -1,6 +1,7 @@
 package javaforum.demo;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Map;
 
@@ -37,7 +38,7 @@ class TestControllerIntegrationTest {
 		assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
 
 		Map<String, Object> body = response.getBody();
-		assertThat(body).isNotNull();
+		assertNotNull(body);
 		assertThat(body).containsKeys("applicationName", "environmentName", "stringValue");
 
 		// values come from application.properties (defaults bundled in src/main/resources)
@@ -47,8 +48,7 @@ class TestControllerIntegrationTest {
 		String profile = environment.getActiveProfiles()[0];
 		assertThat(profile).isEqualTo("dev");
 
-		 // values come from application-dev.properties or application-prod.properties
-		 // depending on active profile
+		// values come from application-dev.properties or application-prod.properties depending on active profile
 		if (profile.equals("prod")) {
 			assertProfile(body, "Produktion");
 		} else if (profile.equals("dev")) {
