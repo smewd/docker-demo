@@ -1,104 +1,141 @@
 
-## Spring Boot-applikation
-Med miljövariabel och Spring-profil som parameter
+## Som Spring Boot-applikation
+Med överskrivning av properties samt miljövariabler och Spring-profil som parameter.
 
+### Bygg:
 ```bash
 mvn clean package
-OD_JDBC_URL='jdbc:h2:mem/db_test' STRING_VALUE='Hejsan hoppsan fran kommandoprompten' java -Dspring.profiles.active=dev -jar target/demo.war
-OD_JDBC_URL='jdbc:mssql:dbd074/db_prod' STRING_VALUE='Hej hej fran CLI' java -Dspring.profiles.active=prod -jar target/demo.war
 ```
 
-### Verifiering
-Gå till http://localhost:8080/data. 
+### Verifiering, generellt
+Vid körning, gå till http://localhost:8080/data i en webbläsare, alternativt gör en request i Bruno eller liknande verktyg.
 
-#### Spring-profil dev
-* stringValue-fältet visar "Hejsan hoppsan fran kommandoprompten"
-* Databas-fältet visar "HSQLDB"
-* environmentName-fältet visar "Utveckling"
+### Kör med default-värden utan profil satt.
 
-#### Spring-profil prod
-* stringValue-fältet visar "Hej hej fran CLI"
-* Databas-fältet visar "MSSQL"
-* environmentName-fältet visar "Produktion"
-
-
-## I Tomcat, via Docker
-
+#### Kommando
 ```bash
-mvn clean package
-docker build -t props-demo .
-docker run -p 8080:8080 --env-file=env.dev props-demo
-docker run -p 8080:8080 --env-file=env.prod props-demo
+java -jar target/demo.war
 ```
 
-### Verifiering
-Gå till http://localhost:8080/data. 
+#### Verifiering
+- stringValue-fältet visar ett default-värde
+- jdbcUrl-fältet visar ett default-värde
+- Databas-fältet visar "Ingen databastyp satt"
+- environmentName-fältet visar "Ingen profil satt"
 
-Verifiera att texten  visas i fältet stringValue.
+### Kör med default-värden, dev-profil.
 
-#### env.dev
-* stringValue-fältet visar "Kör bara kör"
-* Databas-fältet visar "HSQLDB"
-* environmentName-fältet visar "Utveckling"
+#### Kommando
+```bash
+java -Dspring.profiles.active=dev -jar target/demo.war
+```
 
-#### env.prod
-* stringValue-fältet visar "Prod bara prod"
-* Databas-fältet visar "MSSQL"
-* environmentName-fältet visar "Produktion"
+#### Verifiering
+- jdbcUrl-fältet visar ett default-värde
+- stringValue-fältet visar ett default-värde
+- Databas-fältet visar "SQLite"
+- environmentName-fältet visar "Utveckling"
+
+### Kör med default-värden, prod-profil.
+
+#### Kommando
+```bash
+java -Dspring.profiles.active=prod -jar target/demo.war
+```
+
+#### Verifiering
+- jdbcUrl-fältet visar ett default-värde
+- stringValue-fältet visar ett default-värde
+- Databas-fältet visar "SQLite"
+- environmentName-fältet visar "Produktion"
+
+### Kör med överskrivning av Spring-properties, dev-profil.
+
+#### Kommando
+```bash
+env jdbc.url='jdbc:sqlite:db_test.db' string.value='Hejsan hoppsan fran kommandoprompten' java -Dspring.profiles.active=dev -jar target/demo.war
+```
+
+#### Verifiering
+- stringValue-fältet visar "Hejsan hoppsan fran kommandoprompten"
+- jdbcUrl-fältet visar jdbc:sqlite:db_test.db
+- Databas-fältet visar "SQLite"
+- environmentName-fältet visar "Utveckling"
+
+### Kör med miljövariabler, dev-profil.
+
+#### Kommando
+```bash
+env OD_JDBC_URL='jdbc:sqlite:db_test.db' STR_VALUE='Hejsan hoppsan fran kommandoprompten' java -Dspring.profiles.active=dev -jar target/demo.war
+```
+
+#### Verifiering
+- stringValue-fältet visar "Hejsan hoppsan fran kommandoprompten"
+- jdbcUrl-fältet visar jdbc:sqlite:db_test.db
+- Databas-fältet visar "SQLite"
+- environmentName-fältet visar "Utveckling"
+
+### Kör med miljövariabler, prod-profil.
+
+#### Kommando
+```bash
+env OD_JDBC_URL='jdbc:sqlserver://dbd074' STR_VALUE='Hej hej fran CLI' java -Dspring.profiles.active=prod -jar target/demo.war
+```
+
+#### Verifiering
+- stringValue-fältet visar "Hej hej fran CLI"
+- jdbcUrl-fältet visar jdbc:sqlserver://dbd074
+- Databas-fältet visar "MSSQL"
+- environmentName-fältet visar "Produktion"
+
 
 
 ## I Tomcat, via Podman
 
+### Verifiering, generellt
+Vid körning, gå till http://localhost:8080/data i en webbläsare, alternativt gör en request i Bruno eller liknande verktyg.
+
+### Utan profil, med defaultvärden
+
+#### Kommando
 ```bash
-mvn clean package
-podman build -t props-demo .
-podman run -p 8080:8080 --env-file=env.dev props-demo
-podman run -p 8080:8080 --env-file=env.prod props-demo
+podman run -p 8080:8080 -it javaforum
 ```
 
-### Verifiering
-Gå till http://localhost:8080/data. 
+#### Verifiering
+- stringValue-fältet visar ett default-värde
+- jdbcUrl-fältet visar ett default-värde
+- Databas-fältet visar "Ingen databastyp satt"
+- environmentName-fältet visar "Ingen profil satt"
 
-#### env.dev
-* stringValue-fältet visar "Kör bara kör"
-* Databas-fältet visar "HSQLDB"
-* environmentName-fältet visar "Utveckling"
+### Med dev-profil och miljövariabler
 
-#### env.prod
-* stringValue-fältet visar "Prod bara prod"
-* Databas-fältet visar "MSSQL"
-* environmentName-fältet visar "Produktion"
-
-
-
-## Podman
-
-# Dra ner images
-
-I Powershell, kör kommandot `wsl -d podman-machine-default` för att komma in i Podman-subsystemet. Sätt ingen HTTP_PROXY.
-
-Inne i subsystemet kan man sedan köra `podman pull alpine` eller liknande.
-
-
-## Körschema
-
-Visa koden. Application.properties-filer.
-OD_JDBC_URL som värdebärare för env-variabler. Motsvarar OD-variabler i verklig miljö.
-
+#### Kommando
 ```bash
-mvn clean package
-
-java -Dspring.profiles.active=dev -jar target/demo.war
-
-java -Dspring.profiles.active=prod -jar target/demo.war
-
-OD_JDBC_URL='jdbc:h2:mem/db_test' STRING_VALUE='Hej Java-forum!' java -Dspring.profiles.active=dev -jar target/demo.war
-
-OD_JDBC_URL='jdbc:mssql:db_prod' STRING_VALUE='Hej Java-forum!' java -Dspring.profiles.active=dev -jar target/demo.war
-
-podman build -t javaforum .
-
-podman run --env-file=env.dev -p 8080:8080 -t javaforum
-
-podman run --env-file=env.prod -p 8080:8080 -t javaforum
+podman run -p 8080:8080 --env-file=env.dev -it javaforum
 ```
+
+#### Verifiering
+- stringValue-fältet visar "Kör bara kör"
+- jdbcUrl-fältet visar jdbc:hsqldb:mem:testdatabas
+- databas-fältet visar "SQLite"
+- environmentName-fältet visar "Utveckling"
+
+### Med prod-profil och miljövariabler
+
+#### Kommando
+```bash
+podman run -p 8080:8080 --env-file=env.prod -it javaforum
+```
+
+#### Verifiering
+- stringValue-fältet visar "Hej hej fran CLI"
+- jdbcUrl-fältet visar jdbc:sqlserver:dbd074/proddatabas
+- databas-fältet visar "MSSQL"
+- environmentName-fältet visar "Produktion"
+
+
+
+## I Tomcat, via Docker
+
+Ersätt `podman` med `docker` i föregående avsnitt. I övrigt är allt likadant.

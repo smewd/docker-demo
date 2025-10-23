@@ -1,66 +1,60 @@
+## Beskrivning
+
 Demo med webbapplikation som kan visa värden från application.properties eller miljövariabler.
 
-## Properties
-Innehåll i filen `src/main/resources/application.properties`:
 
+### Properties-filer
+
+Koden innehåller `application.properties`-filer. En default utan profil, en för profilen dev och en för profilen prod. 
+
+```bash
+src/main/resources/application.properties
+src/main/resources/application-dev.properties
+src/main/resources/application-prod.properties
 ```
-string.value=@STRING_VALUE@
+
+### Miljövariabler
+
+Default-filen `application.properties` innehåller två properties som populeras via Java- eller miljövariabler. Dessa motsvarar OD-variabler i verklig hostingmiljö. Värden omgivna av "${" och "}" kan ersättas med externa värden vid körning.
+
+```bash
+- string.value=${STR_VALUE}
+- jdbc.url=${OD_JDBC_URL}
 ```
-Värden i `application.properties` omgivna av "@" kan ersättas med externa värden i runtime.
+
+### Profil-specifika properties-filer
+
+De profilspecifika filerna innehåller överskrivning av properties som definieras i default-filen.
 
 
-## Kompilera
+## Bygga och köra
+
+### Bygg och kör applikationen
 
 ```bash
 mvn clean package
-```
 
-
-## Kör som applikation
-
-```bash
 java -jar target/demo.war
 ```
 
-Gå till http://localhost:8080/stringvalue. Texten "@STRING_VALUE@" visas.
 
+### Podman
 
-### Skicka in Spring-property
+#### Dra ner images
 
-```bash
-java -Dstring.value=abcde -jar target/demo.war
-```
+I Powershell, kör kommandot `wsl -d podman-machine-default` för att komma in i Podman-subsystemet. Sätt ingen HTTP_PROXY.
 
-Java-parametern skriver över värdet i propertyn `string.value` i `application.properties`.
+Inne i subsystemet kan man sedan köra `podman pull tomcat:latest` eller liknande.
 
-Gå till http://localhost:8080/stringvalue. Texten "abcde" visas.
-
-
-### Använd miljövariabel
+### Bygg och kör
 
 ```bash
-STRING_VALUE=12345 java -jar target/demo.war
+podman build -t javaforum .
+
+podman run -p 8080:8080 --env-file=<env-fil> javaforum
 ```
 
-Gå till http://localhost:8080/data. Verifiera att texten "12345" visas i fältet stringValue.
 
+## Testning
 
-## Bygg med Docker
-```bash
-docker build -t demo .
-```
-
-## Kör med Docker
-```bash
-docker run -p 8080:8080 demo
-```
-
-Gå till http://localhost:8080/data. Verifiera att texten "@STRING_VALUE@" visas i fältet stringValue.
-
-
-## Använd miljövariabel
-```bash
-docker run -p 8080:8080 -e STRING_VALUE='Kör bara kör!' demo
-```
-
-Gå till http://localhost:8080/data. Verifiera att texten "Kör bara kör!" visas i fältet stringValue.
+Se TESTNING.md för detaljerade instruktioner för körning och verifiering.
