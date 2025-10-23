@@ -14,7 +14,7 @@ public class TestController {
 	@Value("${environment.name}")
 	private String environmentName;
 	
-	@Value("${jdbc_url}")
+	@Value("${jdbc.url}")
 	private String jdbcUrl;
 	
 	@Value("${database}")
