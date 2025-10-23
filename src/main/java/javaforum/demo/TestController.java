@@ -14,6 +14,9 @@ public class TestController {
 	@Value("${environment.name}")
 	private String environmentName;
 	
+	@Value("${jdbc_url}")
+	private String jdbcUrl;
+	
 	@Value("${database}")
 	private String database;
 	
@@ -23,6 +26,6 @@ public class TestController {
 
 	@GetMapping("/data")
 	public Data getData() {
-		return new Data(applicationName, environmentName, database, stringValue);
+		return new Data(applicationName, environmentName, jdbcUrl, database, stringValue);
 	}
 }

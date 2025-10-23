@@ -42,7 +42,7 @@ Gå till http://localhost:8080/stringvalue. Texten "abcde" visas.
 STRING_VALUE=12345 java -jar target/demo.war
 ```
 
-Gå till http://localhost:8080/stringvalue. Texten "12345" visas.
+Gå till http://localhost:8080/data. Verifiera att texten "12345" visas i fältet stringValue.
 
 
 ## Bygg med Docker
@@ -55,7 +55,7 @@ docker build -t demo .
 docker run -p 8080:8080 demo
 ```
 
-Gå till http://localhost:8080/stringvalue. Texten "@STRING_VALUE@" visas.
+Gå till http://localhost:8080/data. Verifiera att texten "@STRING_VALUE@" visas i fältet stringValue.
 
 
 ## Använd miljövariabel
@@ -63,4 +63,4 @@ Gå till http://localhost:8080/stringvalue. Texten "@STRING_VALUE@" visas.
 docker run -p 8080:8080 -e STRING_VALUE='Kör bara kör!' demo
 ```
 
-Gå till http://localhost:8080/stringvalue. Texten "Kör bara kör!" visas.
+Gå till http://localhost:8080/data. Verifiera att texten "Kör bara kör!" visas i fältet stringValue.
