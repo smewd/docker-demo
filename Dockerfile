@@ -1,4 +1,5 @@
 FROM tomcat:10.1-jdk25-temurin
+# FROM tomcat:11.0.13-jdk25-temurin
 
 RUN rm -rf /usr/local/tomcat/webapps/*
 COPY target/demo.war /usr/local/tomcat/webapps/ROOT.war
